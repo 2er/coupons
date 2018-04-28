@@ -28,12 +28,17 @@
         <wv-flex-item>
           <div class="placeholder">
             <div class="logo"><img :src="card.card.logo_url"/></div>
-            <div class="code-image"><img :src="card.card.code_url"/></div>
+            <div class="code-image"><img @click="bigCode=true" :src="card.card.code_url"/></div>
             <div class="code-no">{{card.card.provide_info.code}}</div>
             <div class="notice">{{card.card.notice}}</div>
           </div>
         </wv-flex-item>
       </wv-flex>
+      <transition name="zoom" enter-active-class="zoomIn" leave-active-class="zoomOut">
+        <div class="mask" v-if="bigCode" @click="bigCode=false" >
+          <img :src="card.card.big_code_url" :style="{ marginTop: card.card.code_margin_top}"/>
+        </div>
+      </transition>
     </wv-popup>
   </div>
 </template>
@@ -44,7 +49,8 @@ export default {
   name: 'card',
   data () {
     return {
-      popupVisible: false
+      popupVisible: false,
+      bigCode: false
     }
   },
   props: ['card'],
@@ -132,6 +138,9 @@ export default {
     text-align: center;
     margin-bottom: 10px;
   }
+  .card-container .wv-popup .code-image img {
+    width: 60%;
+  }
   .card-container .wv-popup .code-no {
     text-align: center;
     margin-bottom: 10px;
@@ -140,5 +149,15 @@ export default {
     text-align: center;
     font-size: 10px;
     font-weight: lighter;
+  }
+  .card-container .wv-popup .mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 9999;
+    background-color: #FFFFFF;
+    text-align: center;
   }
 </style>

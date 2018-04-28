@@ -40,12 +40,17 @@
           <div class="placeholder">
             <div class="brand-name">{{coupon.brand_name}}</div>
             <div class="title">{{coupon.sub_title}}</div>
-            <div class="code-image"><img :src="coupon.code_url"/></div>
+            <div class="code-image"><img @click="bigCode=true" :src="coupon.code_url"/></div>
             <div class="code-no">{{coupon.code}}</div>
             <div class="notice">{{coupon.notice}}</div>
           </div>
         </wv-flex-item>
       </wv-flex>
+      <transition name="zoom" enter-active-class="zoomIn" leave-active-class="zoomOut">
+        <div class="mask" v-if="bigCode" @click="bigCode=false" >
+          <img :src="coupon.big_code_url" :style="{ marginTop: coupon.code_margin_top}"/>
+        </div>
+      </transition>
     </wv-popup>
   </div>
 </template>
@@ -58,7 +63,8 @@ export default {
     return {
       couponId: 0,
       coupon: {},
-      popupVisible: false
+      popupVisible: false,
+      bigCode: false
     }
   },
   created: function () {
@@ -145,7 +151,7 @@ export default {
     margin-bottom: 10px;
   }
   .coupon-container .wv-popup .code-image img{
-    width: 80%;
+    width: 60%;
   }
   .coupon-container .wv-popup .code-no {
     text-align: center;
@@ -155,5 +161,15 @@ export default {
     text-align: center;
     font-size: 10px;
     font-weight: lighter;
+  }
+  .coupon-container .wv-popup .mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 9999;
+    background-color: #FFFFFF;
+    text-align: center;
   }
 </style>

@@ -5,6 +5,7 @@ import store from './store/'
 import WeVue from 'we-vue'
 import 'we-vue/lib/style.css'
 import 'we-vue/src/assets/iconfont/iconfont.css'
+import 'vue2-animate/dist/vue2-animate.min.css'
 
 Vue.use(VueRouter)
 Vue.use(WeVue)
